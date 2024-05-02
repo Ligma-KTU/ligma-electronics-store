@@ -17,6 +17,8 @@ namespace ligma_electronics_store
             builder.Services.AddControllersWithViews();
 
             // Add database context
+            builder.Services.AddScoped<AppDbContext>();
+
 
             // Add authentication and authorization
 
