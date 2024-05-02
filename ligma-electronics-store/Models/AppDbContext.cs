@@ -22,7 +22,7 @@ namespace ligma_electronics_store.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Database=electronicsstore;Username=postgres;password=postgre");
+            optionsBuilder.UseNpgsql("Host=localhost;Database=electronicsstore;Username=postgres;password=students");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
