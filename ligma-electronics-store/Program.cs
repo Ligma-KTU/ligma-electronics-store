@@ -21,6 +21,20 @@ namespace ligma_electronics_store
 
 
             // Add authentication and authorization
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.Cookie.HttpOnly = true;
+                    options.ExpireTimeSpan = System.TimeSpan.FromDays(1);
+                    options.LoginPath = "/Account/Login";
+                    options.LogoutPath = "/Account/Logout";
+                });
+
+            builder.Services.AddAuthorization();
+
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
 
             var app = builder.Build();
 
@@ -38,6 +52,16 @@ namespace ligma_electronics_store
             app.UseRouting();
 
             // Use authentication and authorization
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                UserInitializer.Initialize(userManager, roleManager).Wait();
+            }
 
             app.MapControllerRoute(
                 name: "default",
