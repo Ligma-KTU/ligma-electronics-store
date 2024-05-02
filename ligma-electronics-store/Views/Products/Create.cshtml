@@ -1,0 +1,36 @@
+﻿@model ligma_electronics_store.ViewModels.ProductViewModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Create Product";
+}
+
+<h4>Create Product</h4>
+<hr />
+
+<form asp-action="Create">
+    <input asp-for="UserId" type="hidden"/>
+    <input asp-for="ShoppingCartId" type="hidden"/>
+    <div class="form-group">
+        <label asp-for="Name" class="col-md-2 control-label"></label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Price" class="col-md-2 control-label"></label>
+        <input asp-for="Price" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Description" class="col-md-2 control-label"></label>
+        <input asp-for="Description" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="CategoryId" class="col-md-2 control-label"></label>
+        <select asp-for="CategoryId" class="form-control" asp-items="@ViewBag.CategoryList"></select>
+    </div>
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
