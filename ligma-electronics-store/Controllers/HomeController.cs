@@ -21,7 +21,12 @@ namespace ligma_electronics_store.Controllers
 
         public IActionResult Index()
         {
-            return View();
+
+            var categories = _context.Categories
+            .Include(c => c.Products)
+            .ToList();
+
+            return View(categories);
         }
 
         public IActionResult Privacy()
