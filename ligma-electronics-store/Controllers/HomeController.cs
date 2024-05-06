@@ -1,6 +1,7 @@
 ﻿using ligma_electronics_store.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace ligma_electronics_store.Controllers
