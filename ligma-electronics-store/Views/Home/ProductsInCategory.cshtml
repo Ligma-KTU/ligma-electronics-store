@@ -1,0 +1,47 @@
+﻿@model List<Product>
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Products";
+}
+
+<style>
+    .square-card {
+        height: 100%
+    }
+    .quantity{
+        width:50%;
+        margin-right: 10px;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card square-card">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p>@product.Description</p>
+                        <p>$@product.Price</p>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <form asp-controller="ShoppingCart" asp-action="AddItem" method="post">
+                                <div class="d-flex align-items-center">
+                                    <input type="number" class="form-control quantity" name="quantity" placeholder="Quantity" />
+                                    <input type="hidden" name="productId" value="@product.Id" />
+                                    <button type="submit" class="btn btn-primary">Add To Cart</button>
+                                </div>
+                            </form>
+                        }
+                        else
+                        {
+                            <p>Please log in to add items to your cart.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
