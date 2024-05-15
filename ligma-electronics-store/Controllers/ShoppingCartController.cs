@@ -50,7 +50,11 @@ namespace ligma_electronics_store.Controllers
             shoppingCart.ShoppingCartItems.Add(shoppingCartItem);
             _context.SaveChanges();
 
-            return View("ProductAdded");
+            var product = _context.Products.Find(productId);
+
+            int categoryId = product.CategoryId;
+
+            return RedirectToAction("ProductsInCategory", "Home", new { id = categoryId });
         }
     }
 }

@@ -30,6 +30,15 @@ namespace ligma_electronics_store.Controllers
             return View(categories);
         }
 
+        public IActionResult ProductsInCategory(int id)
+        {
+            var products = _context.Products
+                .Include(p => p.Category)
+                .Where(p => p.CategoryId == id)
+                .ToList();
+            return View(products);
+        }
+
         public IActionResult Privacy()
         {
             return View();
