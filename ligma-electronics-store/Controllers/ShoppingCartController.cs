@@ -16,8 +16,16 @@ namespace ligma_electronics_store.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var userId = _userManager.GetUserId(User);
+
+            var shoppingCartItems = _context.ShoppingCartItems
+                .Where(sci => sci.ShoppingCart.UserId == userId)
+                .Include(sci => sci.Product)
+                .ToList();
+
+            return View(shoppingCartItems);
         }
+
         public IActionResult AddItem(int productId, int quantity)
         {
             if (quantity < 1)
@@ -55,6 +63,17 @@ namespace ligma_electronics_store.Controllers
             int categoryId = product.CategoryId;
 
             return RedirectToAction("ProductsInCategory", "Home", new { id = categoryId });
+        }
+
+        public IActionResult RemoveItem(int id)
+        {
+            var shoppingCartItem = _context.ShoppingCartItems.Find(id);
+
+            _context.ShoppingCartItems.Remove(shoppingCartItem);
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }
